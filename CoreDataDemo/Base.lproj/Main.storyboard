@@ -25,6 +25,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="27L-BA-HHg">
                                 <rect key="frame" x="16" y="64" width="343" height="583"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="2oR-xj-00w"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Cz6-Fq-Z91"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -36,8 +40,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="f7d-NR-pDi">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="pCo-cH-pBh"/>
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="pCo-cH-pBh">
+                            <connections>
+                                <action selector="addName:" destination="BYZ-38-t0r" id="4dM-sg-Mkk"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="27L-BA-HHg" id="2oS-Mg-RpR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

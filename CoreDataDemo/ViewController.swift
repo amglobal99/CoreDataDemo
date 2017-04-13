@@ -14,7 +14,10 @@ import CoreData
 class ViewController: UIViewController, UITableViewDataSource {
   
   
+  
   @IBOutlet weak var tableView: UITableView!
+  
+  
   //var names = [String]()
   var people = [NSManagedObject]()
   
@@ -123,6 +126,10 @@ class ViewController: UIViewController, UITableViewDataSource {
     let managedContext = appDelegate.persistentContainer.viewContext
     let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Person")
     do {
+      
+      print("Inside viewWillAppear - fetch seems to be ok")
+      
+      
       let results = try managedContext.fetch(fetchRequest)
       people = results as! [NSManagedObject]
     } catch let error as NSError {
@@ -137,15 +144,24 @@ class ViewController: UIViewController, UITableViewDataSource {
   
   // MARK: UITableViewDataSource
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    print("Table has \(people.count) rows")
+    
     return people.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
+    
+    print("Inside cellForRow")
+    
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
     let person = people[indexPath.row]
     let nameStr = person.value(forKey: "name") ?? "Not Avail"
     let cityStr = person.value(forKey: "city") ?? "N/A"
     let genderStr = person.value(forKey: "gender") ?? "N/A"
+    
+    print( "Name: \(nameStr) , City: \(cityStr)" )
+    
     cell!.textLabel!.text = "\(nameStr) ,  \(cityStr) , \(genderStr) "
     return cell!
   }
