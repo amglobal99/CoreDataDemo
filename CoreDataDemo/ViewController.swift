@@ -9,6 +9,10 @@
 
 import UIKit
 import CoreData
+import os.log
+import Alamofire
+import SwiftyJSON
+
 
 
 class ViewController: UIViewController, UITableViewDataSource {
@@ -17,9 +21,12 @@ class ViewController: UIViewController, UITableViewDataSource {
   
   @IBOutlet weak var tableView: UITableView!
   
-  
-  //var names = [String]()
+
   var people = [NSManagedObject]()
+  
+  
+  
+  
   
   
   // *******************************************************
@@ -47,6 +54,7 @@ class ViewController: UIViewController, UITableViewDataSource {
       (action: UIAlertAction) -> Void in
     }
     
+    
     // Add three input Fields
     alert.addTextField {
       (textField: UITextField) -> Void in
@@ -73,6 +81,8 @@ class ViewController: UIViewController, UITableViewDataSource {
   
   
   
+  
+  
   // ********************************************
   //
   //   Save the record
@@ -80,10 +90,17 @@ class ViewController: UIViewController, UITableViewDataSource {
   // ********************************************
   
   func saveName(name: String, city:String, gender: String) {
+    
     let appDelegate =  UIApplication.shared.delegate as! AppDelegate
     let managedContext = appDelegate.persistentContainer.viewContext
+    
+    // create a NSEntityDescription
     let entity =  NSEntityDescription.entity(forEntityName: "Person",    in:managedContext)
+    
+    // create a NSManagedObject
     let person = NSManagedObject(entity: entity!,  insertInto: managedContext)
+    
+    // set values on NSMangedObject
     person.setValue(name, forKey: "name")
     person.setValue(city, forKey: "city")
     person.setValue(gender, forKey: "gender")
@@ -92,10 +109,10 @@ class ViewController: UIViewController, UITableViewDataSource {
       try managedContext.save()
       people.append(person)
       print("Perosn has been saved...")
-      
     } catch let error as NSError  {
       print("Could not save \(error), \(error.userInfo)")
     }
+  
   }  // end function
   
   
@@ -111,6 +128,9 @@ class ViewController: UIViewController, UITableViewDataSource {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    NSLog("JACK: STEP 11")
+    
     title = "\"The List\""
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
   }
@@ -122,14 +142,18 @@ class ViewController: UIViewController, UITableViewDataSource {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    
+    NSLog("JACK: STEP 2")
+    
+    
+    
     let appDelegate =  UIApplication.shared.delegate as! AppDelegate
     let managedContext = appDelegate.persistentContainer.viewContext
+    
+    // create a NSFtechRequest
     let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Person")
+    
     do {
-      
-      print("Inside viewWillAppear - fetch seems to be ok")
-      
-      
       let results = try managedContext.fetch(fetchRequest)
       people = results as! [NSManagedObject]
     } catch let error as NSError {
@@ -144,15 +168,17 @@ class ViewController: UIViewController, UITableViewDataSource {
   
   // MARK: UITableViewDataSource
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
-    print("Table has \(people.count) rows")
-    
+    print("JACK: Table has \(people.count) rows")
     return people.count
   }
   
+  
+    /*
+      Function gives us the cell content for a Row in our Table
+    */
   func tableView(_ tableView: UITableView, cellForRowAt  indexPath: IndexPath) -> UITableViewCell {
     
-    print("Inside cellForRow")
+    //print("Inside cellForRow")
     
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
     let person = people[indexPath.row]
@@ -160,7 +186,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     let cityStr = person.value(forKey: "city") ?? "N/A"
     let genderStr = person.value(forKey: "gender") ?? "N/A"
     
-    print( "Name: \(nameStr) , City: \(cityStr)" )
+    //print( "Name: \(nameStr) , City: \(cityStr)" )
     
     cell!.textLabel!.text = "\(nameStr) ,  \(cityStr) , \(genderStr) "
     return cell!
