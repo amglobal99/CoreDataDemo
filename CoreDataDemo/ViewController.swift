@@ -92,13 +92,18 @@ class ViewController: UIViewController, UITableViewDataSource {
   func saveName(name: String, city:String, gender: String) {
     
     let appDelegate =  UIApplication.shared.delegate as! AppDelegate
-    let managedContext = appDelegate.persistentContainer.viewContext
+   let managedContext: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
+   
+   
     
     // create a NSEntityDescription
-    let entity =  NSEntityDescription.entity(forEntityName: "Person",    in:managedContext)
+   let entity: NSEntityDescription? =  NSEntityDescription.entity(forEntityName: "Person",    in:managedContext)
+   
+   
+  
     
     // create a NSManagedObject
-    let person = NSManagedObject(entity: entity!,  insertInto: managedContext)
+   let person: NSManagedObject  = NSManagedObject(entity: entity!,  insertInto: managedContext)
     
     // set values on NSMangedObject
     person.setValue(name, forKey: "name")
@@ -169,6 +174,7 @@ class ViewController: UIViewController, UITableViewDataSource {
   // MARK: UITableViewDataSource
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     print("JACK: Table has \(people.count) rows")
+    NSLog("JACK NSLog:  This is right after porint")
     return people.count
   }
   
