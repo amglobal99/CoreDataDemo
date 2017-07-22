@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
+        <attribute name="balance" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="users" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="accounts" inverseEntity="User" syncable="YES"/>
+    </entity>
     <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="fname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lname" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="accounts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="users" inverseEntity="Account" syncable="YES"/>
+    </entity>
     <elements>
+        <element name="Account" positionX="-54" positionY="18" width="128" height="90"/>
         <element name="Person" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="User" positionX="-63" positionY="9" width="128" height="90"/>
     </elements>
 </model>
